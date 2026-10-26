@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Smart Barcode Attendance</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header><button class="g" id="theme" style="float:right">🌓 Theme</button><h1>📷 Smart <span>Barcode</span> Attendance</h1><div class="sub">Register students · print barcode ID cards · scan to mark attendance · get reports</div></header>
+<nav id="nav">
+<button data-p="dash" class="on">Dashboard</button><button data-p="scan">Scan</button><button data-p="stu">Students</button><button data-p="bar">Barcodes</button><button data-p="rep">Reports</button>
+</nav>
+<main>
+<section id="p-dash" class="on">
+<div class="grid" id="metrics"></div>
+<div class="card" style="margin-top:16px"><h2>Check-ins · last 14 days</h2><div class="bars" id="trend"></div></div>
+<div class="card"><h2>📊 Attendance summary (all sessions)</h2><div id="dgraph"></div></div>
+<div class="two"><div class="card"><h2>🏆 Top attendance</h2><div class="sc"><table id="top"></table></div></div><div class="card"><h2>⚠️ At risk (below 75%)</h2><div class="sc"><table id="risk"></table></div></div></div>
+<div class="card"><h2>🏢 Department attendance</h2><div id="dept"></div></div>
+<div class="card"><h2>✨ AI insights</h2><button class="b" id="ai">Analyze attendance</button><p id="aiout" class="sub" style="white-space:pre-wrap"></p></div>
+<div class="card"><h2>Backup &amp; data</h2>
+<div class="row"><button class="b" id="demoAll">Load demo dataset (40 students + 3 weeks)</button><button class="g" id="bkp">Download backup (.json)</button>
+<label style="max-width:260px">Restore backup<input type="file" id="rst" accept=".json"></label>
+<button class="d" id="clr">Clear all data</button></div>
+<p class="sub">Data is stored in this browser on this device. Download a backup regularly.</p></div>
+</section>
+
+<section id="p-scan">
+<div class="card"><div class="row">
+<label>Batch<select id="batch"></select></label><label>Subject<input id="subj" value="Mathematics" list="sl"><datalist id="sl"></datalist></label>
+<label>Date<input id="sdate" type="date"></label></div>
+<div id="msg"></div>
+<h2 style="margin-top:14px">USB scanner / type code</h2>
+<form id="f1" class="row"><label style="flex:3">Barcode<input id="code" autocomplete="off" placeholder="Click here, then scan (scanner presses Enter)"></label><button class="b">Mark present</button><button type="button" class="g" id="sim">🎲 Simulate scan</button></form>
+<h2 style="margin-top:18px">Phone / webcam</h2>
+<button class="g" id="camBtn">Start camera</button><div id="reader"></div></div>
+<div class="card"><h2 id="slt">Present</h2><div class="sc"><table id="slist"></table></div></div>
+</section>
+
+<section id="p-stu">
+<div class="card"><h2>Add student</h2><form id="f2" class="row">
+<label>Roll No / ID *<input id="roll" required></label><label>Full name *<input id="nm" required></label>
+<label>Department<input id="dp"></label><label>Year / Class<input id="yr"></label><button class="b">Add</button></form></div>
+<div class="card"><h2>Bulk add</h2><textarea id="bulk" rows="4" placeholder="One per line: roll,name,department,year&#10;21CS001,Aarav Sharma,CSE,3"></textarea>
+<div class="row" style="margin-top:10px"><button class="g" id="bulkBtn">Add from text</button><button class="g" id="demo">Load demo students</button></div></div>
+<div class="card"><h2 id="stt">Students</h2><input id="q" placeholder="🔍 Search by roll, name or department" style="margin-bottom:10px"><div class="sc"><table id="stl"></table></div></div>
+</section>
+
+<section id="p-bar">
+<div class="card"><h2>Barcodes &amp; ID cards</h2><p class="sub">The barcode value is each student's Roll No (Code-128). Save the ID card image and print it.</p></div>
+<div class="cards" id="bcs"></div>
+</section>
+
+<section id="p-rep">
+<div class="card"><h2>Daily sheet</h2><div class="row"><label>Date<input id="ddate" type="date"></label><label>Batch<select id="dbat"></select></label><label>Subject<select id="dsub"></select></label><button class="g" id="dcsv">Export CSV</button></div>
+<div class="two" style="margin-top:12px"><div class="sc"><b id="pc"></b><table id="pl"></table></div><div class="sc"><b id="ac"></b><table id="al"></table></div></div></div>
+<div class="card"><h2>Attendance summary</h2><div class="row">
+<label>Batch<select id="sbat"></select></label><label>From<input id="sfrom" type="date"></label><label>To<input id="sto" type="date"></label>
+<label>Subject<select id="ssub"></select></label><label>Low below (%)<input id="lim" type="number" value="75" min="1" max="100"></label>
+<button class="g" id="scsv">Export CSV</button></div>
+<div class="row" id="vt" style="margin:12px 0"><button class="g" data-v="graph">📊 Graph</button><button class="g" data-v="table">📋 Table</button></div><p class="sub" id="sinfo"></p><div id="sumG"></div><div class="sc" id="sumT"><table id="sum"></table></div></div>
+</section>
+</main>
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
